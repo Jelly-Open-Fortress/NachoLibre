@@ -9,44 +9,13 @@
             background-color: #0d1117;
             margin: 0;
             padding: 12px;
-            padding-top: 80px; /* Prevents the floating search bar from hiding the NACHO gif */
         }
-        /* Sticky Floating Overlay Search Bar */
-        .search-overlay {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: 90%;
-            max-width: 500px;
-        }
-        .search-form {
-            width: 100%;
-            display: flex;
-        }
-        .search-input {
-            width: 100%;
-            padding: 12px 20px;
-            font-size: 16px;
-            background-color: rgba(22, 27, 34, 0.95); /* Semi-transparent dark styling */
-            border: 1px solid #30363d;
-            border-radius: 30px; /* Completely rounded pill design */
-            color: #c9d1d9;
-            outline: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px); /* Smooth blur behind the bar */
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .search-input:focus {
-            border-color: #58a6ff;
-            box-shadow: 0 4px 25px rgba(88, 166, 255, 0.3);
-        }
-        /* Massive Centered Header Image */
+
+        /* Top Title Section */
         .title-container {
             display: flex;
             justify-content: center;
-            margin-top: 16px;
+            margin-top: 40px;
             margin-bottom: 24px;
         }
         .title-img {
@@ -55,13 +24,46 @@
             max-height: 350px;
             display: block;
         }
+
+        /* Centered, Sticky Search Bar Container */
+        .search-overlay {
+            position: fixed;
+            top: 400px; /* Positions it lower on the page, sitting comfortably under the GIF */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 580px; /* Similar to Google's standard search bar width */
+        }
+        .search-form {
+            width: 100%;
+            display: flex;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            background-color: rgba(22, 27, 34, 0.95);
+            border: 1px solid #30363d;
+            border-radius: 30px; /* Rounded pill style */
+            color: #c9d1d9;
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-input:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 4px 25px rgba(88, 166, 255, 0.3);
+        }
+
         /* Tight Masonry Collage Grid */
         .collage-container {
             column-count: 3;
             column-gap: 12px;
             width: 100%;
             max-width: 1400px;
-            margin: 0 auto;
+            margin: 120px auto 0 auto; /* Added extra margin top so the images don't hide behind the lower search bar */
         }
         .gallery-item {
             display: inline-block;
@@ -74,18 +76,26 @@
             display: block;
             object-fit: contain;
         }
+
         @media (max-width: 900px) {
-            .collage-container { column-count: 2; }
+            .collage-container { column-count: 2; margin-top: 140px; }
+            .search-overlay { top: 320px; }
         }
         @media (max-width: 600px) {
-            .collage-container { column-count: 1; }
+            .collage-container { column-count: 1; margin-top: 160px; }
+            .search-overlay { top: 260px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Search Bar Overlay (Submits directly to DuckDuckGo) -->
-    <div class="search-overlay">https://pstream.net/media/tmdb-movie-9353-nacho-libre
+    <!-- Big Headline Title Image -->
+    <div class="title-container">
+        <img src="NACHO.gif" alt="NACHO" class="title-img">
+    </div>
+
+    <!-- Front, Center, and Lowered Search Bar Overlay -->
+    <div class="search-overlay">
         <form action="https://duckduckgo.com" method="get" class="search-form">
             <input 
                 type="text" 
@@ -97,12 +107,7 @@
         </form>
     </div>
 
-    <!-- Big Headline Title Image -->
-    <div class="title-container">
-        <img src="NACHO.gif" alt="NACHO" class="title-img">
-    </div>
-
-    <!-- Image Collage List -->
+    <!-- Pure Image Collage List -->
     <div class="collage-container" id="gallery"></div>
 
 <script>
