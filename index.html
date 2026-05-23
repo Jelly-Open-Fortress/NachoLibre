@@ -3,121 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numeric Image Gallery</title>
+    <title>Numeric Gallery</title>
     <style>
         body {
-            font-family: sans-serif;
-            background-color: #f4f4f9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
             margin: 0;
-            padding: 20px;
+            padding: 24px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1012px;
             margin: 0 auto;
         }
-        .upload-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            text-align: center;
+        .repo-header {
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .gallery {
+        .repo-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #58a6ff;
+        }
+        .repo-title span {
+            color: #8b949e;
+            font-weight: 400;
+            margin: 0 4px;
+        }
+        .btn-upload {
+            position: relative;
+            background-color: #238636;
+            color: #ffffff;
+            padding: 5px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            border: 1px solid rgba(240,246,252,0.1);
+            cursor: pointer;
+            display: inline-block;
+        }
+        .btn-upload:hover {
+            background-color: #2ea043;
+        }
+        .btn-upload input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .repo-box {
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            background-color: #161b22;
+            overflow: hidden;
+        }
+        .repo-box-header {
+            background-color: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 16px;
+            font-size: 14px;
+            color: #8b949e;
+        }
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            background: white;
-            padding: 25px; /* Added padding to the gallery container */
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            padding: 24px;
         }
         .gallery-item {
-            border: 1px solid #ddd;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
             border-radius: 6px;
             overflow: hidden;
-            background: #fff;
             display: flex;
             flex-direction: column;
+            transition: border-color 0.2s;
+        }
+        .gallery-item:hover {
+            border-color: #58a6ff;
+        }
+        .img-container {
+            width: 100%;
+            height: 160px;
+            background-color: #161b22;
+            display: flex;
             align-items: center;
-            padding: 10px; /* Added padding inside each item */
+            justify-content: center;
+            border-bottom: 1px solid #30363d;
+            padding: 8px;
+            box-sizing: border-box;
         }
         .gallery-item img {
-            width: 100%;
-            height: 180px;
-            object-fit: containment;
-            background: #fafafa;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
-        .image-label {
-            margin-top: 10px;
-            font-weight: bold;
-            color: #333;
+        .file-info {
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #c9d1d9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background-color: #161b22;
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="upload-section">
-        <h2>Numeric Image Gallery</h2>
-        <p>Select multiple images. Only images named exactly as a number (e.g., "12.jpg", "3.png") will be shown, sorted numerically.</p>
-        <input type="file" id="fileInput" multiple accept="image/*">
+    <div class="repo-header">
+        <div class="repo-title">
+            image-loader<span>/</span><strong>numeric-gallery</strong>
+        </div>
+        <div class="btn-upload">
+            Add files
+            <input type="file" id="fileInput" multiple accept="image/*">
+        </div>
     </div>
 
-    <div class="gallery" id="galleryContainer">
-        <!-- Sorted images will appear here -->
+    <div class="repo-box">
+        <div class="repo-box-header" id="statusHeader">
+            0 numeric files found. Upload images to populate the gallery grid.
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 </div>
 
 <script>
     document.getElementById('fileInput').addEventListener('change', function(event) {
         const files = Array.from(event.target.files);
-        const galleryContainer = document.getElementById('galleryContainer');
+        const galleryGrid = document.getElementById('galleryGrid');
+        const statusHeader = document.getElementById('statusHeader');
         
-        // Clear previous gallery content
-        galleryContainer.innerHTML = '';
+        galleryGrid.innerHTML = '';
 
-        // Filter and map files to track their numerical value
         const validFiles = files
             .map(file => {
-                // Get filename without extension
                 const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.'));
-                
-                // Check if the name is purely numeric
                 const isNumeric = /^\d+$/.test(nameWithoutExt);
-                
                 return {
                     file: file,
                     isValid: isNumeric,
                     numValue: isNumeric ? parseInt(nameWithoutExt, 10) : null
                 };
             })
-            .filter(item => item.isValid); // Keep only numeric ones
+            .filter(item => item.isValid);
 
-        // Sort items numerically by their parsed value
         validFiles.sort((a, b) => a.numValue - b.numValue);
+        statusHeader.textContent = `${validFiles.length} numeric file${validFiles.length === 1 ? '' : 's'} sorted successfully.`;
 
-        // Render sorted images into the gallery
         validFiles.forEach(item => {
             const reader = new FileReader();
-
             reader.onload = function(e) {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'gallery-item';
+
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'img-container';
 
                 const img = document.createElement('img');
                 img.src = e.target.result;
                 img.alt = item.file.name;
 
-                const label = document.createElement('div');
-                label.className = 'image-label';
-                label.textContent = item.file.name;
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                fileInfo.textContent = item.file.name;
 
-                itemDiv.appendChild(img);
-                itemDiv.appendChild(label);
-                galleryContainer.appendChild(itemDiv);
+                imgContainer.appendChild(img);
+                itemDiv.appendChild(imgContainer);
+                itemDiv.appendChild(fileInfo);
+                galleryGrid.appendChild(itemDiv);
             };
-
             reader.readAsDataURL(item.file);
         });
     });
