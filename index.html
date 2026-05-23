@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numeric Image Gallery</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .upload-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            background: white;
+            padding: 25px; /* Added padding to the gallery container */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .gallery-item {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px; /* Added padding inside each item */
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: containment;
+            background: #fafafa;
+        }
+        .image-label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <div class="upload-section">
+        <h2>Numeric Image Gallery</h2>
+        <p>Select multiple images. Only images named exactly as a number (e.g., "12.jpg", "3.png") will be shown, sorted numerically.</p>
+        <input type="file" id="fileInput" multiple accept="image/*">
+    </div>
+
+    <div class="gallery" id="galleryContainer">
+        <!-- Sorted images will appear here -->
+    </div>
+</div>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const files = Array.from(event.target.files);
+        const galleryContainer = document.getElementById('galleryContainer');
+        
+        // Clear previous gallery content
+        galleryContainer.innerHTML = '';
+
+        // Filter and map files to track their numerical value
+        const validFiles = files
+            .map(file => {
+                // Get filename without extension
+                const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.'));
+                
+                // Check if the name is purely numeric
+                const isNumeric = /^\d+$/.test(nameWithoutExt);
+                
+                return {
+                    file: file,
+                    isValid: isNumeric,
+                    numValue: isNumeric ? parseInt(nameWithoutExt, 10) : null
+                };
+            })
+            .filter(item => item.isValid); // Keep only numeric ones
+
+        // Sort items numerically by their parsed value
+        validFiles.sort((a, b) => a.numValue - b.numValue);
+
+        // Render sorted images into the gallery
+        validFiles.forEach(item => {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'gallery-item';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = item.file.name;
+
+                const label = document.createElement('div');
+                label.className = 'image-label';
+                label.textContent = item.file.name;
+
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(label);
+                galleryContainer.appendChild(itemDiv);
+            };
+
+            reader.readAsDataURL(item.file);
+        });
+    });
+</script>
+
+</body>
+</html>
