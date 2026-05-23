@@ -28,14 +28,15 @@
 
         /* Centered, Sticky Search Bar Container */
         .search-overlay {
-            position: fixed;
-            top: 400px; /* Positions it lower on the page, sitting comfortably under the GIF */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: 90%;
-            max-width: 580px; /* Similar to Google's standard search bar width */
-        }
+  position: fixed;
+  bottom: 24px; /* Anchors the search bar 24px above the bottom of the screen */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 90%;
+  max-width: 580px;
+}
+
         .search-form {
             width: 100%;
             display: flex;
