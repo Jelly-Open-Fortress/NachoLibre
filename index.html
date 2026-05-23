@@ -8,55 +8,46 @@
         body {
             background-color: #0d1117;
             margin: 0;
-            padding: 24px;
+            padding: 32px; /* Large padding around the screen edge */
         }
-        /* Padded grid gallery container */
+        /* Pure image grid with large column sizes and gaps */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Increased item size */
+            gap: 32px; /* Keeps spacious padding between images */
         }
-        /* Custom padding inside and around each image card */
         .gallery-item {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-sizing: border-box;
+            width: 100%;
         }
+        /* Maximizes the actual image size with zero backgrounds or borders */
         .gallery-item img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
             object-fit: contain;
-            border-radius: 4px;
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <!-- Simple grid for your images -->
     <div class="gallery-grid" id="gallery"></div>
 
 <script>
-    // List of your exact numeric image names from your repository
     const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'];
 
-    // Automatically sorts them numerically (1, 2, 3...) just in case the array order changes
     imageFiles.sort((a, b) => parseInt(a) - parseInt(b));
 
     const galleryContainer = document.getElementById('gallery');
 
-    // Dynamically inject each image into the padded gallery grid
     imageFiles.forEach(fileName => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
 
         const img = document.createElement('img');
-        img.src = fileName; // Pulls the image directly from your folder
+        img.src = fileName;
         img.alt = fileName;
 
         item.appendChild(img);
