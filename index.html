@@ -8,29 +8,39 @@
         body {
             background-color: #0d1117;
             margin: 0;
-            padding: 24px; /* Space around the entire screen edge */
+            padding: 12px; /* Tightened edge padding around the screen */
         }
-        /* True masonry column layout for a collage look */
+        /* Title image container */
+        .title-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px; /* Spacing between title gif and the collage */
+        }
+        .title-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px; /* Limits size so it doesn't overpower the layout */
+            display: block;
+        }
+        /* Collage structure with tighter boundaries */
         .collage-container {
-            column-count: 3; /* Controls how many columns display side-by-side */
-            column-gap: 24px; /* The exact spacing padding between columns */
+            column-count: 3;
+            column-gap: 12px; /* Reduced padding between image columns */
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
         }
         .gallery-item {
-            display: inline-block; /* Essential to prevent image splitting over columns */
+            display: inline-block;
             width: 100%;
-            margin-bottom: 24px; /* The exact vertical padding between images */
+            margin-bottom: 12px; /* Reduced padding between vertically stacked images */
         }
-        /* Pure large image style */
         .gallery-item img {
             width: 100%;
             height: auto;
             display: block;
             object-fit: contain;
         }
-        /* Responsive adjustments for smaller screen profiles */
         @media (max-width: 900px) {
             .collage-container { column-count: 2; }
         }
@@ -41,6 +51,12 @@
 </head>
 <body>
 
+    <!-- Title Image at the Top -->
+    <div class="title-container">
+        <img src="NACHO.gif" alt="NACHO" class="title-img">
+    </div>
+
+    <!-- Image Collage -->
     <div class="collage-container" id="gallery"></div>
 
 <script>
