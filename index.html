@@ -8,7 +8,39 @@
         body {
             background-color: #0d1117;
             margin: 0;
-            padding: 12px; /* Tight edge profile */
+            padding: 12px;
+            padding-top: 80px; /* Prevents the floating search bar from hiding the NACHO gif */
+        }
+        /* Sticky Floating Overlay Search Bar */
+        .search-overlay {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+        }
+        .search-form {
+            width: 100%;
+            display: flex;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: rgba(22, 27, 34, 0.95); /* Semi-transparent dark styling */
+            border: 1px solid #30363d;
+            border-radius: 30px; /* Completely rounded pill design */
+            color: #c9d1d9;
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px); /* Smooth blur behind the bar */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-input:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 4px 25px rgba(88, 166, 255, 0.3);
         }
         /* Massive Centered Header Image */
         .title-container {
@@ -20,7 +52,7 @@
         .title-img {
             max-width: 100%;
             height: auto;
-            max-height: 350px; /* Made the header significantly larger */
+            max-height: 350px;
             display: block;
         }
         /* Tight Masonry Collage Grid */
@@ -29,7 +61,7 @@
             column-gap: 12px;
             width: 100%;
             max-width: 1400px;
-            margin: 0 auto 40px auto; /* Added extra bottom margin to separate from embed */
+            margin: 0 auto;
         }
         .gallery-item {
             display: inline-block;
@@ -42,37 +74,28 @@
             display: block;
             object-fit: contain;
         }
-        /* Bottom Centered Video Player Container */
-        .embed-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 800px; /* Limits player width so it looks crisp */
-            margin: 0 auto 32px auto; /* Centered with clear bottom breathing room */
-            padding: 0 12px;
-            box-sizing: border-box;
-        }
-        .embed-container iframe {
-            width: 100%;
-            height: 450px; /* Traditional 16:9 responsive height match */
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Soft depth layer */
-            background-color: #000;
-        }
         @media (max-width: 900px) {
             .collage-container { column-count: 2; }
-            .embed-container iframe { height: 350px; }
         }
         @media (max-width: 600px) {
             .collage-container { column-count: 1; }
-            .embed-container iframe { height: 250px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Floating Search Bar Overlay (Submits directly to DuckDuckGo) -->
+    <div class="search-overlay">https://pstream.net/media/tmdb-movie-9353-nacho-libre
+        <form action="https://duckduckgo.com" method="get" class="search-form">
+            <input 
+                type="text" 
+                name="q" 
+                class="search-input" 
+                placeholder="Search DuckDuckGo..." 
+                required
+            >
+        </form>
+    </div>
 
     <!-- Big Headline Title Image -->
     <div class="title-container">
@@ -81,16 +104,6 @@
 
     <!-- Image Collage List -->
     <div class="collage-container" id="gallery"></div>
-
-    <!-- Centered Bottom Video Embed -->
-    <div class="embed-container">
-        <iframe 
-            src="https://pstream.net/media/tmdb-movie-9353-nacho-libre" 
-            allowfullscreen 
-            scrolling="no"
-            loading="lazy">
-        </iframe>
-    </div>
 
 <script>
     const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'];
