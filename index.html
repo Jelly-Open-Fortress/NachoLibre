@@ -7,7 +7,8 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
-            background-color: #0d1117;
+            background: linear-gradient(135deg, #005f73 0%, #ae2012 50%, #ca6702 100%);
+            background-attachment: fixed;
             margin: 0;
             padding: 12px;
         }
@@ -100,14 +101,29 @@
         }
 
         @media (max-width: 900px) {
-            .collage-container { column-count: 2; margin-top: 140px; }
-            .search-overlay { top: 320px; }
-            .embed-container iframe { height: 350px; }
+            .collage-container {
+                column-count: 2;
+                margin-top: 140px;
+            }
+            .search-overlay {
+                top: 320px;
+            }
+            .embed-container iframe {
+                height: 350px;
+            }
         }
+
         @media (max-width: 600px) {
-            .collage-container { column-count: 1; margin-top: 160px; }
-            .search-overlay { top: 260px; }
-            .embed-container iframe { height: 250px; }
+            .collage-container {
+                column-count: 1;
+                margin-top: 160px;
+            }
+            .search-overlay {
+                top: 260px;
+            }
+            .embed-container iframe {
+                height: 250px;
+            }
         }
     </style>
 </head>
@@ -121,13 +137,7 @@
     <!-- Front, Center, and Lowered Search Bar Overlay -->
     <div class="search-overlay">
         <form action="https://duckduckgo.com" method="get" class="search-form">
-            <input 
-                type="text" 
-                name="q" 
-                class="search-input" 
-                placeholder="Search DuckDuckGo..." 
-                required
-            >
+            <input type="text" name="q" class="search-input" placeholder="Search DuckDuckGo..." required>
         </form>
     </div>
 
@@ -136,33 +146,25 @@
 
     <!-- Centered Bottom Video Embed -->
     <div class="embed-container">
-        <iframe 
-            src="https://pstream.net/media/tmdb-movie-9353-nacho-libre" 
-            allowfullscreen 
-            scrolling="no"
-            loading="lazy">
-        </iframe>
+        <iframe src="https://pstream.net" allowfullscreen scrolling="no" loading="lazy"></iframe>
     </div>
 
-<script>
-    const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'];
+    <script>
+        const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'];
+        imageFiles.sort((a, b) => parseInt(a) - parseInt(b));
 
-    imageFiles.sort((a, b) => parseInt(a) - parseInt(b));
+        const galleryContainer = document.getElementById('gallery');
+        imageFiles.forEach(fileName => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
 
-    const galleryContainer = document.getElementById('gallery');
+            const img = document.createElement('img');
+            img.src = fileName;
+            img.alt = fileName;
 
-    imageFiles.forEach(fileName => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-
-        const img = document.createElement('img');
-        img.src = fileName;
-        img.alt = fileName;
-
-        item.appendChild(img);
-        galleryContainer.appendChild(item);
-    });
-</script>
-
+            item.appendChild(img);
+            galleryContainer.appendChild(item);
+        });
+    </script>
 </body>
 </html>
