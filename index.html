@@ -6,112 +6,124 @@
     <title>Nacho Libre Browser</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        body { 
-            background: linear-gradient(135deg, #005f73 0%, #ae2012 50%, #ca6702 100%); 
-            background-attachment: fixed; 
-            margin: 0; 
-            padding: 12px; 
-            box-sizing: border-box;
-            font-family: sans-serif;
+        body {
+            background: linear-gradient(135deg, #005f73 0%, #ae2012 50%, #ca6702 100%);
+            background-attachment: fixed;
+            margin: 0;
+            padding: 4px;
         }
 
         /* Top Title Section */
-        .title-container { 
-            display: flex; 
-            justify-content: center; 
-            margin: 20px auto;
-            max-width: 1400px;
+        .title-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            margin-bottom: 24px;
         }
-        .title-img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-        }
+        .title-img {
+  width: 100%; /* Forces the image to span the full width */
+  height: auto; /* Maintains the original aspect ratio */
+  display: block;
+}
 
-        /* Centered Search Bar Container */
-        .search-overlay { 
-            width: 90%; 
-            max-width: 580px; 
-            margin: 24px auto; 
+        /* Centered, Sticky Search Bar Container */
+        .search-overlay {
+  position: fixed;
+  bottom: 24px; /* Anchors the search bar 24px above the bottom of the screen */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 90%;
+  max-width: 580px;
+}
+
+        .search-form {
+            width: 100%;
+            display: flex;
         }
-        .search-form { 
-            width: 100%; 
-            display: flex; 
+        .search-input {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            background-color: rgba(22, 27, 34, 0.95);
+            border: 1px solid #30363d;
+            border-radius: 30px; /* Rounded pill style */
+            color: #c9d1d9;
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .search-input { 
-            width: 100%; 
-            padding: 14px 24px; 
-            font-size: 16px; 
-            background-color: rgba(22, 27, 34, 0.95); 
-            border: 1px solid #30363d; 
-            border-radius: 30px; 
-            color: #c9d1d9; 
-            outline: none; 
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(8px); 
-            transition: border-color 0.2s, box-shadow 0.2s; 
-        }
-        .search-input:focus { 
-            border-color: #58a6ff; 
-            box-shadow: 0 4px 25px rgba(88, 166, 255, 0.3); 
+        .search-input:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 4px 25px rgba(88, 166, 255, 0.3);
         }
 
         /* Tight Masonry Collage Grid */
-        .collage-container { 
-            column-count: 3; 
-            column-gap: 12px; 
-            width: 100%; 
-            max-width: 1400px; 
-            margin: 24px auto; 
+        .collage-container {
+            column-count: 3;
+            column-gap: 12px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 120px auto 40px auto; /* Added bottom margin to space out the collage from the video player */
         }
-        .gallery-item { 
-            display: inline-block; 
-            width: 100%; 
-            margin-bottom: 12px; 
+        .gallery-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 12px;
         }
-        .gallery-item img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            object-fit: contain; 
-            border-radius: 4px;
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
 
         /* Bottom Centered Video Player Container */
-        .embed-container { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%; 
-            max-width: 800px; 
-            margin: 40px auto; 
+        .embed-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px; /* Limits player width so it looks crisp */
+            margin: 0 auto 32px auto; /* Centered with clear bottom breathing room */
+            padding: 0 12px;
+            box-sizing: border-box;
         }
-        .embed-container iframe { 
-            width: 100%; 
-            height: 450px; 
-            border: none; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
-            background-color: #000; 
+        .embed-container iframe {
+            width: 100%;
+            height: 450px; /* Traditional 16:9 responsive height match */
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Soft depth layer */
+            background-color: #000;
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 900px) { 
-            .collage-container { 
-                column-count: 2; 
-            } 
-            .embed-container iframe { 
-                height: 350px; 
-            } 
+        @media (max-width: 900px) {
+            .collage-container {
+                column-count: 2;
+                margin-top: 140px;
+            }
+            .search-overlay {
+                top: 320px;
+            }
+            .embed-container iframe {
+                height: 350px;
+            }
         }
-        @media (max-width: 600px) { 
-            .collage-container { 
-                column-count: 1; 
-            } 
-            .embed-container iframe { 
-                height: 250px; 
-            } 
+
+        @media (max-width: 600px) {
+            .collage-container {
+                column-count: 1;
+                margin-top: 160px;
+            }
+            .search-overlay {
+                top: 260px;
+            }
+            .embed-container iframe {
+                height: 250px;
+            }
         }
     </style>
 </head>
@@ -122,7 +134,7 @@
         <img src="NACHO.gif" alt="NACHO" class="title-img">
     </div>
 
-    <!-- Front and Center Search Bar -->
+    <!-- Front, Center, and Lowered Search Bar Overlay -->
     <div class="search-overlay">
         <form action="https://duckduckgo.com" method="get" class="search-form">
             <input type="text" name="q" class="search-input" placeholder="Search DuckDuckGo..." required>
@@ -134,29 +146,22 @@
 
     <!-- Centered Bottom Video Embed -->
     <div class="embed-container">
-        <iframe src="https://pstream.net" allowfullscreen scrolling="no" loading="lazy"></iframe>
+        <iframe src="https://pstream.net/media/tmdb-movie-9353-nacho-libre" allowfullscreen scrolling="no" loading="lazy"></iframe>
     </div>
 
     <script>
         const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'];
-
-        // Fisher-Yates Shuffle Algorithm to randomize the order safely
-        for (let i = imageFiles.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [imageFiles[i], imageFiles[j]] = [imageFiles[j], imageFiles[i]];
-        }
+        imageFiles.sort((a, b) => parseInt(a) - parseInt(b));
 
         const galleryContainer = document.getElementById('gallery');
-
-        // Render the shuffled elements
         imageFiles.forEach(fileName => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            
+
             const img = document.createElement('img');
             img.src = fileName;
             img.alt = fileName;
-            
+
             item.appendChild(img);
             galleryContainer.appendChild(item);
         });
