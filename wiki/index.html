@@ -3,172 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nacho Libre - Repository Wiki</title>
+    <title>Nacho Libre | Fandom</title>
     <style>
         /* ==========================================================================
-           THEME ENGINE (Stealth Gray, Crimson Red, and Oaxaca Gold)
+           FANDOM WIKI SKIN LAYOUT
            ========================================================================== */
         body {
-            background-color: #2b2b2b;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2b2b2b; /* Matches your stealth gray theme */
+            color: #f5f5f5;
+            font-family: Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            font-size: 14px;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
+        /* Fandom Global Top Navigation Bar Bar */
+        .fandom-nav {
+            background-color: #1a1a1a;
+            border-bottom: 2px solid #ff3333; /* Crimson Accent */
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* Header Style matching your landing page */
-        header {
-            text-align: center;
-            border-bottom: 3px solid #ff3333; /* Signature Crimson */
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 3.5rem;
+        .fandom-logo {
             font-family: 'Arial Black', sans-serif;
+            font-weight: 900;
+            font-size: 18px;
+            color: #e5c158; /* Oaxaca Gold */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .fandom-logo span {
             color: #ffffff;
-            margin: 10px 0;
-            text-shadow: 3px 3px 0px #e5c158; /* Oaxaca Gold Shadow */
+        }
+
+        /* Main Wiki Core Layout Wrapper */
+        .wiki-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        /* Left Hand Sticky Navigation Component */
+        .wiki-sidebar {
+            background-color: #202020;
+            border-radius: 4px;
+            padding: 15px;
+            height: fit-content;
+            border: 1px solid #444;
+        }
+
+        .wiki-sidebar h3 {
+            color: #e5c158;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-top: 0;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .wiki-sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .wiki-sidebar li {
+            margin: 12px 0;
+        }
+
+        .wiki-sidebar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .wiki-sidebar a:hover {
+            color: #ff3333;
+            text-decoration: underline;
+        }
+
+        /* Main Central Article Canvas */
+        .wiki-main {
+            background-color: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 5px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .article-title {
+            font-size: 36px;
+            font-family: Georgia, serif;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            color: #ffffff;
+        }
+
+        /* THE FAMOUS FANDOM RIGHT SIDE INFOBOX COMPONENT */
+        .portable-infobox {
+            float: right;
+            width: 320px;
+            background-color: #282828;
+            border: 2px solid #e5c158; /* Oaxaca Gold Frame */
+            border-radius: 4px;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .infobox-title {
+            background-color: #ff3333; /* Crimson Title Banner */
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px;
             text-transform: uppercase;
         }
 
-        .subtitle {
-            color: #e5c158;
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
+        .infobox-image {
+            text-align: center;
+            background-color: #111;
+            padding: 15px;
+            border-bottom: 1px solid #444;
         }
 
-        /* Wiki Section Cards */
-        .wiki-section {
-            background-color: #383838;
-            border: 2px solid #e5c158; /* Gold Frame */
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 25px;
+        .infobox-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 2px;
+        }
+
+        .infobox-header {
+            background-color: #333333;
+            color: #e5c158;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            letter-spacing: 1px;
+        }
+
+        .infobox-row {
+            display: flex;
+            border-bottom: 1px solid #3a3a3a;
+            padding: 8px 10px;
+        }
+
+        .infobox-label {
+            font-weight: bold;
+            width: 40%;
+            color: #b0b0b0;
+        }
+
+        .infobox-value {
+            width: 60%;
+        }
+
+        /* Content Text Elements */
+        p {
+            line-height: 1.7;
+            margin-bottom: 1.5em;
+            color: #dfdfdf;
         }
 
         h2 {
-            color: #ff3333; /* Crimson headers */
-            font-size: 1.8rem;
-            margin-top: 0;
-            border-bottom: 1px solid #444;
-            padding-bottom: 8px;
+            font-family: Georgia, serif;
+            color: #e5c158;
+            border-bottom: 1px solid #3a3a3a;
+            padding-bottom: 5px;
+            margin-top: 30px;
         }
 
-        /* Quotes Block */
-        blockquote {
-            background-color: #222;
-            border-left: 5px solid #e5c158;
+        /* Interactive Quote blocks */
+        .fandom-quote {
+            background-color: #252525;
+            border-left: 4px solid #ff3333;
             margin: 20px 0;
             padding: 15px;
             font-style: italic;
-            color: #ddd;
         }
 
-        /* Fact Grid Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #444;
-        }
-
-        th {
+        .fandom-quote span {
+            display: block;
+            text-align: right;
+            font-size: 12px;
             color: #e5c158;
-            width: 30%;
-        }
-
-        /* List Styling */
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        strong {
-            color: #e5c158;
+            margin-top: 5px;
+            font-style: normal;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="subtitle">OFFICIAL MOVIE DATABASE</div>
-            <h1>Nacho Libre</h1>
-            <p>Released: 2006 • Directed by Jared Hess • Starring Jack Black</p>
-        </header>
+    <nav class="fandom-nav">
+        <a class="fandom-logo" href="#">Nacho Libre <span>Wiki</span></a>
+        <div style="color: #888; font-size: 12px;">EXPLORE WIKIS • SIGN IN</div>
+    </nav>
 
-        <div class="wiki-section">
-            <h2>Synopsis</h2>
-            <p><strong>Ignacio (Jack Black)</strong> is a cook for the Oaxaca monastery orphanage in Mexico. While he cares deeply for the orphans, his food is terrible due to a lack of funds for quality ingredients. After being beaten up for tortilla chips by a local street thief named <strong>Esqueleto</strong>, Ignacio decides to secretly moonlights as a luchador wrestler to win prize money.</p>
-            <p>Forming a tag-team duo with Esqueleto, Ignacio takes on the ring name <strong>"Nacho"</strong>. He must hide his forbidden wrestling identity from the monastery friars and the beautiful, devout <strong>Sister Encarnación</strong>, all while aiming to defeat the legendary champion, Ramses.</p>
-            <blockquote>"When you are a man, sometimes you wear stretchy pants in your room. It's for fun." — Ignacio</blockquote>
-        </div>
-
-        <div class="wiki-section">
-            <h2>Character Roster</h2>
+    <div class="wiki-wrapper">
+        
+        <aside class="wiki-sidebar">
+            <h3>On this wiki</h3>
             <ul>
-                <li><strong>Ignacio / Nacho:</strong> An eccentric monk-turned-wrestler fighting to give the orphans a better life (and buy better salad ingredients).</li>
-                <li><strong>Steven / Esqueleto:</strong> Ignacio's skinny, chip-stealing tag-team partner who doesn't believe in God, only in "science".</li>
-                <li><strong>Sister Encarnación:</strong> A kind, newly arrived nun at the orphanage who unknowingly captures Ignacio's heart.</li>
-                <li><strong>Ramses:</strong> The reigning champion of lucha libre. Vain, ruthless, and wears a golden mask. He is completely uncharitable to fans and orphans alike.</li>
-                <li><strong>Chancho:</strong> Ignacio's favorite orphan who uncovers Nacho's secret identity and helps keep his secret safe.</li>
+                <li><a href="#Overview">Overview</a></li>
+                <li><a href="#Plot">Plot Summary</a></li>
+                <li><a href="#Characters">Main Characters</a></li>
+                <li><a href="#Quotes">Memorable Lines</a></li>
             </ul>
-        </div>
+        </aside>
 
-        <div class="wiki-section">
-            <h2>Production Metadata</h2>
-            <table>
-                <tr>
-                    <th>Director</th>
-                    <td>Jared Hess (Director of *Napoleon Dynamite*)</td>
-                </tr>
-                <tr>
-                    <th>Screenplay</th>
-                    <td>Jared Hess, Jerusha Hess, Mike White</td>
-                </tr>
-                <tr>
-                    <th>Filming Location</th>
-                    <td>Oaxaca, Mexico</td>
-                </tr>
-                <tr>
-                    <th>Based On</th>
-                    <td>The true story of Fray Tormenta (Sergio Gutiérrez Benítez), a real Mexican priest who wrestled for 23 years to fund his orphanage.</td>
-                </tr>
-                <tr>
-                    <th>Soundtrack Highlights</th>
-                    <td>Features music by Danny Elfman and original songs sung by Jack Black.</td>
-                </tr>
-            </table>
-        </div>
+        <main class="wiki-main">
+            <h1 class="article-title">Ignacio</h1>
+            
+            <div class="portable-infobox">
+                <div class="infobox-title">Nacho Libre</div>
+                <div class="infobox-image">
+                    <img src="nachomask.png" alt="Luchador Mask Logo" style="width: 100px;">
+                </div>
+                <div class="infobox-header">Production Details</div>
+                <div class="infobox-row">
+                    <div class="infobox-label">Directed by</div>
+                    <div class="infobox-value">Jared Hess</div>
+                </div>
+                <div class="infobox-row">
+                    <div class="infobox-label">Starring</div>
+                    <div class="infobox-value">Jack Black<br>Héctor Jiménez<br>Ana de la Reguera</div>
+                </div>
+                <div class="infobox-row">
+                    <div class="infobox-label">Release Date</div>
+                    <div class="infobox-value">June 16, 2006</div>
+                </div>
+                <div class="infobox-header">Box Office & Lore</div>
+                <div class="infobox-row">
+                    <div class="infobox-label">Budget</div>
+                    <div class="infobox-value">$32 Million</div>
+                </div>
+                <div class="infobox-row">
+                    <div class="infobox-label">Based on</div>
+                    <div class="infobox-value">Fray Tormenta</div>
+                </div>
+            </div>
 
-        <div class="wiki-section">
-            <h2>Legendary Quotes</h2>
+            <p id="Overview"><strong>Nacho Libre</strong> is a 2006 sports comedy film directed by Jared Hess and written by Jared, Jerusha Hess, and Mike White. The movie features Jack Black as Ignacio, a monastic cook who secretly ventures into the world of Mexican lucha libre wrestling to save an orphanage from financial ruin.</p>
+
+            <h2 id="Plot">Plot Summary</h2>
+            <p>Ignacio spends his days cooking terrible, nutrient-starved meals for orphans in a Mexican monastery. After his ingredients are stolen on the street by a stray vagrant named Steven (Esqueleto), Ignacio hits a breaking point. To secure funding for fresh salad ingredients and a better life for the children, he convinces Steven to form a secret lucha libre tag-team partnership.</p>
+            
+            <div class="fandom-quote">
+                "When you are a man, sometimes you wear stretchy pants in your room. It's for fun."
+                <span>— Ignacio</span>
+            </div>
+
+            <p>Donning a blue-and-purple luchador mask to shield his identity from the critical Friars and his secret crush, Sister Encarnación, Ignacio fights up through the regional wrestling ranks. His ultimate test comes when he squares off with the god-tier champion, Ramses, to earn the grand charity purse.</p>
+
+            <h2 id="Characters">Main Characters</h2>
+            <p><strong>Steven (Esqueleto):</strong> Ignacio's incredibly thin tag-team partner. He functions as the pragmatic skeletal agility node to Nacho's raw power, famously claiming allegiance to "science" rather than spiritual salvation.</p>
+            <p><strong>Sister Encarnación:</strong> A devout, newly arriving teacher at the orphanage who advocates against the structural violence of wrestling, forcing Ignacio to live a double life to maintain her respect.</p>
+            <p><strong>Ramses:</strong> The vanity-driven, golden-masked champion of lucha libre who acts as the primary antagonist of the cinematic narrative.</p>
+
+            <h2 id="Quotes">Memorable Lines</h2>
+            <p>The film has generated a massive cult following due to its highly quotable script:</p>
             <ul>
-                <li>"Chancho. When you are a man, sometimes you wear stretchy pants in your room."</li>
-                <li>"I am a little concerned right now about your salvation and stuff."</li>
-                <li>"Get up! Experience the high, supreme flavor of a traditional Mexican delicacy!"</li>
-                <li>"Those eggs were a lie, Steven. A lie! They gave me no eagle powers! They gave me no nutrients!"</li>
-                <li>"Precious Father, why have you given me this desire to wrestle and then made me such a stinker?"</li>
+                <li><em>"Those eggs were a lie, Steven. A lie! They gave me no eagle powers! They gave me no nutrients!"</em></li>
+                <li><em>"I am a little concerned right now about your salvation and stuff."</em></li>
+                <li><em>"Get up! Experience the high, supreme flavor of a traditional Mexican delicacy!"</em></li>
             </ul>
-        </div>
+        </main>
+
     </div>
 
 </body>
