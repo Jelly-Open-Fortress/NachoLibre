@@ -8,32 +8,40 @@
         body {
             background-color: #0d1117;
             margin: 0;
-            padding: 32px; /* Large padding around the screen edge */
+            padding: 24px; /* Space around the entire screen edge */
         }
-        /* Pure image grid with large column sizes and gaps */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Increased item size */
-            gap: 32px; /* Keeps spacious padding between images */
+        /* True masonry column layout for a collage look */
+        .collage-container {
+            column-count: 3; /* Controls how many columns display side-by-side */
+            column-gap: 24px; /* The exact spacing padding between columns */
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         .gallery-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block; /* Essential to prevent image splitting over columns */
             width: 100%;
+            margin-bottom: 24px; /* The exact vertical padding between images */
         }
-        /* Maximizes the actual image size with zero backgrounds or borders */
+        /* Pure large image style */
         .gallery-item img {
             width: 100%;
             height: auto;
-            object-fit: contain;
             display: block;
+            object-fit: contain;
+        }
+        /* Responsive adjustments for smaller screen profiles */
+        @media (max-width: 900px) {
+            .collage-container { column-count: 2; }
+        }
+        @media (max-width: 600px) {
+            .collage-container { column-count: 1; }
         }
     </style>
 </head>
 <body>
 
-    <div class="gallery-grid" id="gallery"></div>
+    <div class="collage-container" id="gallery"></div>
 
 <script>
     const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'];
