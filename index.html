@@ -150,21 +150,24 @@
     </div>
 
     <script>
-        const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'];
-        imageFiles.sort((a, b) => parseInt(a) - parseInt(b));
+const imageFiles = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'];
 
-        const galleryContainer = document.getElementById('gallery');
-        imageFiles.forEach(fileName => {
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
+// Fisher-Yates Shuffle Algorithm to randomize array elements
+for (let i = imageFiles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [imageFiles[i], imageFiles[j]] = [imageFiles[j], imageFiles[i]];
+}
 
-            const img = document.createElement('img');
-            img.src = fileName;
-            img.alt = fileName;
+const galleryContainer = document.getElementById('gallery');
 
-            item.appendChild(img);
-            galleryContainer.appendChild(item);
-        });
-    </script>
-</body>
-</html>
+imageFiles.forEach(fileName => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    
+    const img = document.createElement('img');
+    img.src = fileName;
+    img.alt = fileName;
+    
+    item.appendChild(img);
+    galleryContainer.appendChild(item);
+});
